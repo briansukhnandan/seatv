@@ -30,25 +30,25 @@ export async function getTVShowDataByID(id: number) {
   return await res.json();
 }
 
-// TODO: deduplicate the logic in the below functions? the only
-// thing that differs is the 2nd arg in appendToEndpoint().
-export async function getSimilarTVShowsByTVID(id: number) {
+export async function getTVShowDetailsGeneral(id: number, requestType: string) {
   const numResultsToReturn = 10;
   let endpoint = constructEndpointForGeneralRequest('tv', id);
-  endpoint = appendToEndpoint(endpoint, '/similar');
+  endpoint = appendToEndpoint(endpoint, requestType);
 
   const res = await fetch(endpoint);
   const shows = await res.json();
   return (shows?.results).slice(0, numResultsToReturn);
+}
+
+// Wrappers for the general function
+export async function getSimilarTVShowsByTVID(id: number) {
+  return await getTVShowDetailsGeneral(id, '/similar');
 }
 
 export async function getTVRecommendationsByTVID(id: number) {
-  const numResultsToReturn = 10;
-  let endpoint = constructEndpointForGeneralRequest('tv', id);
-  endpoint = appendToEndpoint(endpoint, '/recommendations');
-
-  const res = await fetch(endpoint);
-  const shows = await res.json();
-  return (shows?.results).slice(0, numResultsToReturn);
+  return await getTVShowDetailsGeneral(id, '/recommendations');
 }
 
+export async function getTVShowReviewsByTVID(id: number) {
+  return await getTVShowDetailsGeneral(id, '/reviews');
+}

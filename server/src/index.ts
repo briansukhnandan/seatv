@@ -1,7 +1,8 @@
 import express from 'express';
 import { 
   getTVShowDataByID,
-  getSimilarTVShowsByTVID
+  getSimilarTVShowsByTVID,
+  getTVRecommendationsByTVID
 } from './api/theMovieDB';
 
 const router = express();
@@ -12,6 +13,7 @@ router.get('/', (req, res) => {
   res.send("Why are you here?");
 });
 
+// Utility
 router.get('/tv/:id', async (req, res) => {
   const result = await getTVShowDataByID(Number(req.params.id));
   res.send(result);
@@ -22,6 +24,10 @@ router.get('/tv/:id/similar', async (req, res) => {
   res.send(result);
 });
 
+router.get('/tv/:id/recommendations', async (req, res) => {
+  const result = await getTVRecommendationsByTVID(Number(req.params.id));
+  res.send(result);
+});
 
 // Listen on port 3002.
 router.listen(PORT, () => {
