@@ -2,11 +2,18 @@ import dotenv from 'dotenv';
 dotenv.config({path: `${__dirname}/../../.env`})
 
 export default class Auth {
-  traktClientID: string;
-  traktClientSecret: string;
+  private theMovieDBAccessToken: string;
+  private theMovieDBApiKey: string;
 
   constructor() {
-    this.traktClientID = process.env.TRAKT_CLIENT_ID;
-    this.traktClientSecret = process.env.TRAKT_CLIENT_SECRET;
+    this.theMovieDBAccessToken = process.env.THEMOVIEDB_ACCESS_TOKEN;
+    this.theMovieDBApiKey = process.env.THEMOVIEDB_API_KEY;
+  }
+
+  public getTheMovieDBCredentials() {
+    return {
+      token:`${this.theMovieDBAccessToken}`,
+      apiKey: `${this.theMovieDBApiKey}`
+    };
   }
 }
