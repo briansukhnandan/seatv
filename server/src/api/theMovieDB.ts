@@ -25,22 +25,23 @@ const constructEndpointForGeneralRequest = (mediaType: string, id: number) => {
   return `${THEMOVIEDB_BASE_URL}/3/${mediaType}/${id}?${params}`;
 }
 
-export async function getTVShowDataByID(id: number) {
-  const res = await fetch(constructEndpointForGeneralRequest('tv', id));
-  return await res.json();
-}
-
 export async function getTVShowDetailsGeneral(id: number, requestType: string) {
-  const numResultsToReturn = 10;
   let endpoint = constructEndpointForGeneralRequest('tv', id);
   endpoint = appendToEndpoint(endpoint, requestType);
 
   const res = await fetch(endpoint);
   const shows = await res.json();
-  return (shows?.results).slice(0, numResultsToReturn);
+
+  // Default back to the shows object if there's no
+  // results field name.
+  return shows?.results || shows;
 }
 
 // Wrappers for the general function
+export async function getTVShowMetadataByTVID(id: number) {
+  return await getTVShowDetailsGeneral(id, '');
+}
+
 export async function getSimilarTVShowsByTVID(id: number) {
   return await getTVShowDetailsGeneral(id, '/similar');
 }

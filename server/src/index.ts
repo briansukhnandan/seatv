@@ -1,6 +1,6 @@
 import express from 'express';
 import { 
-  getTVShowDataByID,
+  getTVShowMetadataByTVID,
   getSimilarTVShowsByTVID,
   getTVRecommendationsByTVID
 } from './api/theMovieDB';
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 // Utility
 router.get('/tv/:id', async (req, res) => {
-  const result = await getTVShowDataByID(Number(req.params.id));
+  const result = await getTVShowMetadataByTVID(Number(req.params.id));
   res.send(result);
 });
 
