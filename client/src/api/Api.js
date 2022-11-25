@@ -32,4 +32,19 @@ export default class Api {
     const metaData = await this.makeGETApiRequest(`/api/tv/${id}`);
     return await metaData.json();
   }
+
+  async getSimilarTVShowsByTVID(id) {
+    const metaData = await this.makeGETApiRequest(`/api/tv/${id}/similar`);
+    return await metaData.json();
+  }
+
+  async getRecommendationsByTVID(id) {
+    const metaData = await this.makeGETApiRequest(`/api/tv/${id}/recommendations`);
+    return await metaData.json();
+  }
+
+  async getReviewsByTVID(id) {
+    const metaData = await this.makeGETApiRequest(`/api/tv/${id}/reviews`);
+    return await metaData.json();
+  }
 }
