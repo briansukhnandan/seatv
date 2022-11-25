@@ -20,8 +20,7 @@ export default class ShowCarousel extends Component {
 
     const generatedShowMetadata = [];
     while (generatedShowMetadata.length < numShowsToFetch) {
-      const id = Math.floor(Math.random() * maxNumberToChooseFrom) + 1;
-      const metaData = await (this.props.api).getTVShowMetadataByTVID(id);
+      const metaData = await (this.props.api).getTVShowMetadataByTVID(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
 
       if (isTheMovieDBApiResponseValid(metaData)) {
         generatedShowMetadata.push({
