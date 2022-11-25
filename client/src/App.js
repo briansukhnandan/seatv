@@ -1,12 +1,11 @@
-import ShowPortrait from './components/shows/individual/ShowPortrait';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Hi this is Brian</p>
       </header>
-      <ShowPortrait />
+      <HomePage />
     </div>
   );
 }

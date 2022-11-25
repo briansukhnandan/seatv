@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ShowPortrait from './individual/ShowPortrait';
-import Api from '../../api/Api';
 
 export default class ShowCarousel extends Component {
 
@@ -12,17 +11,15 @@ export default class ShowCarousel extends Component {
   }
 
   async componentDidMount() {
-    const api = new Api();
-
-    console.log('hi');
-    const metaData = await api.getTVShowMetadataByTVID(10);
-    console.log(metaData);
+    
   }
 
   render() {
     return(
       <>
-        <ShowPortrait />
+        <ShowPortrait 
+          api={this.props.api}
+        />
       </>
     )
   }

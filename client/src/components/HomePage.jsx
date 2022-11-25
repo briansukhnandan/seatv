@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import ShowCarousel from './shows/ShowCarousel';
+import Api from '../api/Api';
 
 export default class HomePage extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   async componentDidMount() {
 
@@ -10,7 +14,9 @@ export default class HomePage extends Component {
   render() {
     return(
       <div>
-        <ShowCarousel />
+        <ShowCarousel 
+          api={new Api()}
+        />
       </div>
     )
   }

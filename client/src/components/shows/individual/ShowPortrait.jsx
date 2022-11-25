@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Api from '../../../api/Api';
 
 export default class ShowPortrait extends Component {
   constructor(props) {
@@ -7,10 +6,7 @@ export default class ShowPortrait extends Component {
   }
   
   async componentDidMount() {
-    const api = new Api();
-
-    console.log('hi');
-    const metaData = await api.getTVShowMetadataByTVID(10);
+    const metaData = await (this.props.api).getTVShowMetadataByTVID(5);
     console.log(metaData);
   }
 
