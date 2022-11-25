@@ -12,8 +12,13 @@ app.use(cors());
 const PORT = 3002;
 
 // Root route
+app.get('/', (req, res) => {
+  res.json({msg: 'Why are you here? 10 points from Gryffindor!', status_code: 200});
+});
+
+// Testing route
 app.get('/api/test', (req, res) => {
-  res.json({msg: 'test_message'});
+  res.json({msg: 'Proxy is functional!', status_code: 200});
 });
 
 // Utility
