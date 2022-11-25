@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Api from '../../../api/Api';
 
 export default class ShowPortrait extends Component {
   constructor(props) {

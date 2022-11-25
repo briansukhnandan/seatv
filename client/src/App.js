@@ -1,4 +1,4 @@
-import ShowPortrait from './components/ShowPortrait';
+import ShowPortrait from './components/shows/individual/ShowPortrait';
 
 function App() {
   return (
