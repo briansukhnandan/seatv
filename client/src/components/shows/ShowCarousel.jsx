@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ShowPortrait from './individual/ShowPortrait';
-import { isTheMovieDBApiResponseValid } from '../../util/response';
+import { isApiResponseValid } from '../../util/response';
 
 export default class ShowCarousel extends Component {
 
@@ -22,7 +22,7 @@ export default class ShowCarousel extends Component {
     while (generatedShowMetadata.length < numShowsToFetch) {
       const metaData = await (this.props.api).getTVShowMetadataByTVID(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
 
-      if (isTheMovieDBApiResponseValid(metaData)) {
+      if (isApiResponseValid(metaData)) {
         generatedShowMetadata.push({
           name: metaData.name,
           posterPath: metaData.poster_path
