@@ -47,8 +47,8 @@ const constructEndpointForGeneralRequest = ({
       headers: reqHeaders
     }
   */
+ 
   const THEMOVIEDB_BASE_URL='https://api.themoviedb.org';
-
   let paramsObj = {
     'api_key': new Auth().getTMDBCreds().apiKey
   };
@@ -61,7 +61,7 @@ const constructEndpointForGeneralRequest = ({
     case SearchTypes.Query:
       if (page) { paramsObj['page'] = page }
       if (language) { paramsObj['language'] = language }
-      if (!includeAdult) { paramsObj['include_adult'] = false }
+      if (!includeAdult) { paramsObj['include_adult'] = 'false' }
       if (firstAirDateYear) { paramsObj['first_air_date_year'] = firstAirDateYear }
 
       if (query) {

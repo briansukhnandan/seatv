@@ -4,7 +4,8 @@ import {
   getTVShowMetadataByTVID,
   getSimilarTVShowsByTVID,
   getTVRecommendationsByTVID,
-  getTVShowReviewsByTVID
+  getTVShowReviewsByTVID,
+  getTVShowDetailsByQueryGeneral
 } from './api/theMovieDB';
 
 const app = express();
@@ -21,7 +22,10 @@ app.get('/api/test', (req, res) => {
   res.json({msg: 'Proxy is functional!', status_code: 200});
 });
 
-// Utility
+
+/////////////////////////////
+// TMDB ID-Based endpoints //
+/////////////////////////////
 app.get('/api/tv/:id', async (req, res) => {
   const result = await getTVShowMetadataByTVID(Number(req.params.id));
   res.json(result);
@@ -41,6 +45,13 @@ app.get('/api/tv/:id/reviews', async (req, res) => {
   const result = await getTVShowReviewsByTVID(Number(req.params.id));
   res.send(result);
 });
+
+////////////////////////////////
+// TMDB Query-Based endpoints //
+////////////////////////////////
+// app.get('/api/search/tv', (req, res) => {
+//   res.json({msg: 'Proxy is functional!', status_code: 200});
+// });
 
 // Listen on port 3002.
 app.listen(PORT, () => {
