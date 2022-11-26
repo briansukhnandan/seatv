@@ -72,6 +72,8 @@ const constructEndpointForGeneralRequest = ({
   }
 }
 
+// id - Taken from TMDB
+// requestType ∈ ['reviews', 'recommendations', 'similar']
 export async function getTVShowDetailsByIdGeneral(id: number, requestType: string) {
   let endpoint = constructEndpointForGeneralRequest({
     id, 
