@@ -33,25 +33,26 @@ app.get('/api/tv/:id', async (req, res) => {
 
 app.get('/api/tv/:id/similar', async (req, res) => {
   const result = await getSimilarTVShowsByTVID(Number(req.params.id));
-  res.send(result);
+  res.json(result);
 });
 
 app.get('/api/tv/:id/recommendations', async (req, res) => {
   const result = await getTVRecommendationsByTVID(Number(req.params.id));
-  res.send(result);
+  res.json(result);
 });
 
 app.get('/api/tv/:id/reviews', async (req, res) => {
   const result = await getTVShowReviewsByTVID(Number(req.params.id));
-  res.send(result);
+  res.json(result);
 });
 
 ////////////////////////////////
 // TMDB Query-Based endpoints //
 ////////////////////////////////
-// app.get('/api/search/tv', (req, res) => {
-//   res.json({msg: 'Proxy is functional!', status_code: 200});
-// });
+app.get('/api/search/tv/:query', async (req, res) => {
+  const result = await getTVShowDetailsByQueryGeneral({ query: req.params.query });
+  res.json(result);
+});
 
 // Listen on port 3002.
 app.listen(PORT, () => {
