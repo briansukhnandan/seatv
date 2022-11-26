@@ -2,7 +2,7 @@ export default class Api {
   /*
     General function for making a request to some endpoint
     endpoint - URL on the backend to make request.
-    params - Extra stuff we want to pass on (e.g. id, name, etc.). Pass in as a Javascript obj.
+    data (optional) - For passing in data on POST request
   */
   async makeGETApiRequest(endpoint) {
     return await fetch(endpoint, {
@@ -24,10 +24,9 @@ export default class Api {
     return res.json();
   }
 
-  /*
-    Wrapper functions to interact with the
-    Express backend. 
-  */
+  /////////////////////////////////////////
+  // TMDB Search by ID wrapper functions //
+  /////////////////////////////////////////
   async getTVShowMetadataByTVID(id) {
     const metaData = await this.makeGETApiRequest(`/api/tv/${id}`);
     return await metaData.json();
@@ -45,6 +44,14 @@ export default class Api {
 
   async getReviewsByTVID(id) {
     const metaData = await this.makeGETApiRequest(`/api/tv/${id}/reviews`);
+    return await metaData.json();
+  }
+
+  ////////////////////////////////////////////
+  // TMDB Search by Query wrapper functions //
+  ////////////////////////////////////////////
+  async getTVShowMetadataByQuery(query) {
+    const metaData = await this.makeGETApiRequest(`/api/search/tv/${encodeURI(query)}`);
     return await metaData.json();
   }
 }

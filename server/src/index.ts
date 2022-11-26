@@ -49,6 +49,7 @@ app.get('/api/tv/:id/reviews', async (req, res) => {
 ////////////////////////////////
 // TMDB Query-Based endpoints //
 ////////////////////////////////
+/* Note - The client must send the query as a URI-encoded string. */
 app.get('/api/search/tv/:query', async (req, res) => {
   const result = await getTVShowDetailsByQueryGeneral({ query: req.params.query });
   res.json(result);

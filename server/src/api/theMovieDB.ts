@@ -6,7 +6,6 @@ const SearchTypes = {
   Query: 'query'
 }
 const constructEndpointForGeneralRequest = ({
-  // Search types - 
   // TMDB supports 2 modes:
   //    - By ID (no official mapping of ID -> TV show on their API docs unfortunately).
   //    - By Query (Useful for SearchBar implementation)
@@ -19,9 +18,8 @@ const constructEndpointForGeneralRequest = ({
   includeAdult = true,
   firstAirDateYear,
 
-  // Whether id or query, and mediaType defaulted to tv. Probably no need
-  // to have this, but maybe something related to other media types can be
-  // valuable later.
+  // searchType ∈ ['id', 'query']
+  // mediaType - Defaulted to 'tv'.
   searchType,
   mediaType = 'tv',
 } : {
@@ -66,7 +64,7 @@ const constructEndpointForGeneralRequest = ({
 
       if (query) {
         // TMDB requires query to be URI encoded.
-        paramsObj['query'] = encodeURI(query);
+        paramsObj['query'] = query;
 
         const queryParams = new URLSearchParams(paramsObj);
         return `${THEMOVIEDB_BASE_URL}/3/search/${mediaType}?${queryParams}`;
