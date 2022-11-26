@@ -10,7 +10,7 @@ export default class Auth {
     this.theMovieDBApiKey = process.env.THEMOVIEDB_API_KEY;
   }
 
-  public getTheMovieDBCredentials() {
+  public getTMDBCreds() {
     return {
       token:`${this.theMovieDBAccessToken}`,
       apiKey: `${this.theMovieDBApiKey}`
