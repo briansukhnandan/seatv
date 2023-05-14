@@ -1,10 +1,7 @@
 import Auth from '../auth/Auth';
 import { appendToEndpoint } from '../util/requests';
+import { SearchTypes } from '../types/Search';
 
-const SearchTypes = {
-  ID: 'id',
-  Query: 'query'
-}
 const constructEndpointForGeneralRequest = ({
   // TMDB supports 2 modes:
   //    - By ID (no official mapping of ID -> TV show on their API docs unfortunately).
@@ -23,7 +20,7 @@ const constructEndpointForGeneralRequest = ({
   searchType,
   mediaType = 'tv',
 } : {
-  searchType: string,
+  searchType: SearchTypes,
   id?: number,
   query?: string,
   language?: string,
@@ -151,4 +148,14 @@ export async function getTVRecommendationsByTVID(id: number) {
 
 export async function getTVShowReviewsByTVID(id: number) {
   return await getTVShowDetailsByIdGeneral(id, '/reviews');
+}
+
+// RPC wrappers
+export async function getMultipleTVShowsMetadataByTVIDs(ids: number[]) {
+  const metaDataObj = {};
+  for (const id of ids) {
+    metaDataObj[id] = await getTVShowMetadataByTVID(id);
+  }
+
+  return metaDataObj;
 }

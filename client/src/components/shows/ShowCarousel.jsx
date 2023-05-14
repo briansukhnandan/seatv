@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ShowPortrait from './individual/ShowPortrait';
-import { isApiResponseValid } from '../../util/response';
 
 export default class ShowCarousel extends Component {
 
@@ -12,30 +11,26 @@ export default class ShowCarousel extends Component {
     }
   }
 
-  async generateRandomShowIds() {
+  async generateRandomShows() {
     // It's unclear how many tv ids TheMovieDB houses. From minimal
     // trial and error, it seems anything past 150k DNE.
     const maxNumberToChooseFrom = 150000;
     const numShowsToFetch = 10;
+    const ids = [];
 
-    const generatedShowMetadata = [];
-    while (generatedShowMetadata.length < numShowsToFetch) {
-      const metaData = await (this.props.api).getTVShowMetadataByTVID(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
-
-      if (isApiResponseValid(metaData)) {
-        generatedShowMetadata.push({
-          name: metaData.name,
-          posterPath: metaData.poster_path
-        });
-      }
+    for (let i = 0; i < numShowsToFetch; i++) {
+      ids.push(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
     }
+    const showMetadata = await (this.props.api).getMultipleTVShowMetadataByTVIDs(ids);
 
-    return generatedShowMetadata;
+    return Object.values(showMetadata);
   }
 
   async componentDidMount() {
-    const generatedShowMetadata = await this.generateRandomShowIds();
+    const generatedShowMetadata = await this.generateRandomShows();
     this.setState({ generatedShowMetadata });
+
+    //const multi = await (this.props.api).getMultipleTVShowMetadataByTVIDs()
   }
 
   render() {
@@ -45,5 +40,4 @@ export default class ShowCarousel extends Component {
       </>
     )
   }
-
 }

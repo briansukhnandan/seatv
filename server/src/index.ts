@@ -1,16 +1,22 @@
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import { 
   getTVShowMetadataByTVID,
   getSimilarTVShowsByTVID,
   getTVRecommendationsByTVID,
   getTVShowReviewsByTVID,
-  getTVShowDetailsByQueryGeneral
+  getTVShowDetailsByQueryGeneral,
+  getMultipleTVShowsMetadataByTVIDs
 } from './api/theMovieDB';
 
 const app = express();
-app.use(cors());
 const PORT = 3002;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Root route
 app.get('/', (req, res) => {
@@ -21,7 +27,6 @@ app.get('/', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({msg: 'Proxy is functional!', status_code: 200});
 });
-
 
 /////////////////////////////
 // TMDB ID-Based endpoints //
@@ -43,6 +48,15 @@ app.get('/api/tv/:id/recommendations', async (req, res) => {
 
 app.get('/api/tv/:id/reviews', async (req, res) => {
   const result = await getTVShowReviewsByTVID(Number(req.params.id));
+  res.json(result);
+});
+
+///////////////////////////////////
+// TMDB ID-Based endpoints (RPC) //
+///////////////////////////////////
+app.post('/api/rpc/tv', async (req, res) => {
+  const { ids } = req.body;
+  const result = await getMultipleTVShowsMetadataByTVIDs(ids);
   res.json(result);
 });
 
