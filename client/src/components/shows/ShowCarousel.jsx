@@ -1,17 +1,10 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import ShowPortrait from './individual/ShowPortrait';
 
-export default class ShowCarousel extends Component {
+export const ShowCarousel = ({api}) => {
+  const [ randomShows, setRandomShows ] = useState([]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      shows: [],
-      generatedShowMetadata: []
-    }
-  }
-
-  async generateRandomShows() {
+  const generateRandomShows = async() => {
     // It's unclear how many tv ids TheMovieDB houses. From minimal
     // trial and error, it seems anything past 150k DNE.
     const maxNumberToChooseFrom = 150000;
@@ -21,23 +14,33 @@ export default class ShowCarousel extends Component {
     for (let i = 0; i < numShowsToFetch; i++) {
       ids.push(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
     }
-    const showMetadata = await (this.props.api).getMultipleTVShowMetadataByTVIDs(ids);
+    console.log(ids);
+    const showMetadata = await api.getMultipleTVShowMetadataByTVIDs(ids);
 
-    return Object.values(showMetadata);
+    return Object.values(showMetadata).filter(show => !!show?.name);
   }
 
-  async componentDidMount() {
-    const generatedShowMetadata = await this.generateRandomShows();
-    this.setState({ generatedShowMetadata });
+  useEffect(() => {
+    const generatedShowMetadata = generateRandomShows().then(data => {
+      setRandomShows(data);
+    });
+  }, []);
 
-    //const multi = await (this.props.api).getMultipleTVShowMetadataByTVIDs()
-  }
+  // console.log('loaded showcarousel');
+  console.log(randomShows);
 
-  render() {
-    return(
-      <>
-        { this.state.generatedShowMetadata.map(show => <ShowPortrait key={show.name} api={this.props.api} data={show} />) }
-      </>
-    )
-  }
+  return (
+    <>
+      {(randomShows || []).map(show => (
+          <ShowPortrait 
+            key={show.name} 
+            api={api} 
+            data={show} 
+          />
+        )
+      )}
+    </>
+  )
 }
+
+export default ShowCarousel;

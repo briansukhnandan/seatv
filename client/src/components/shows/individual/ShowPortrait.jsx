@@ -1,16 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class ShowPortrait extends Component {
-  constructor(props) {
-    super(props);
-  }
-  
-  async componentDidMount() {
-  }
-
-  render() {
-    return (
-      <div>{this.props.data.name}</div>
-    )
-  }
+export const ShowPortrait = ({data}) => {
+  return (
+    <div>{data.name}</div>
+  );
 }
+
+export default ShowPortrait;
