@@ -1,6 +1,8 @@
 import Auth from '../auth/Auth';
 import { appendToEndpoint } from '../util/requests';
 import { SearchTypes } from '../types/Search';
+import { formatRawDataIntoShowModel } from '../TMDBOperations';
+import { Show } from '../../../common/types/Show';
 
 const constructEndpointForGeneralRequest = ({
   // TMDB supports 2 modes:
@@ -83,7 +85,12 @@ export async function getTVShowDetailsByIdGeneral(id: number, requestType: strin
 
   // Default back to the shows object if there's no
   // results field name.
-  return shows?.results || shows;
+  let showToFormat = shows?.results || shows;
+  if (showToFormat?.id && showToFormat?.name) {
+    showToFormat = formatRawDataIntoShowModel(showToFormat);
+  }
+
+  return showToFormat;
 }
 
 export async function getTVShowDetailsByQueryGeneral({
@@ -98,7 +105,7 @@ export async function getTVShowDetailsByQueryGeneral({
   page?: number,
   includeAdult?: boolean,
   firstAirDateYear?: number,
-}) {
+}): Promise<Show[]> {
   const args = {};
 
   args['query'] = query;
@@ -115,7 +122,12 @@ export async function getTVShowDetailsByQueryGeneral({
   const res = await fetch(endpoint);
   const shows = await res.json();
 
-  return shows?.results || shows;
+  let showToFormat = shows?.results || shows;
+  if (showToFormat?.id && showToFormat?.name) {
+    showToFormat = formatRawDataIntoShowModel(showToFormat);
+  }
+
+  return showToFormat;
 }
 
 // Info taken from: https://developers.themoviedb.org/3/configuration/get-api-configuration

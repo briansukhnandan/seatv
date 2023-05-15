@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ShowPortrait from './individual/ShowPortrait';
+import { Show } from '../../../../common/types/Show';
 
 export const ShowCarousel = ({api}) => {
   const [ randomShows, setRandomShows ] = useState([]);
@@ -14,31 +15,28 @@ export const ShowCarousel = ({api}) => {
     for (let i = 0; i < numShowsToFetch; i++) {
       ids.push(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
     }
-    console.log(ids);
-    const showMetadata = await api.getMultipleTVShowMetadataByTVIDs(ids);
+    const showMetadata: Record<string, Show> = await api.getMultipleTVShowMetadataByTVIDs(ids);
 
     return Object.values(showMetadata).filter(show => !!show?.name);
   }
 
   useEffect(() => {
-    const generatedShowMetadata = generateRandomShows().then(data => {
+    generateRandomShows().then(data => {
       setRandomShows(data);
     });
   }, []);
 
-  // console.log('loaded showcarousel');
   console.log(randomShows);
 
   return (
     <>
       {(randomShows || []).map(show => (
-          <ShowPortrait 
-            key={show.name} 
-            api={api} 
-            data={show} 
-          />
-        )
-      )}
+        <ShowPortrait 
+          key={show.id} 
+          api={api} 
+          data={show} 
+        />
+      ))}
     </>
   )
 }

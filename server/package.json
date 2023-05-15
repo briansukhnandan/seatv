@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend Service for tvboxd",
-  "main": "dist/index.js",
+  "main": "dist/server/src/index.js",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "dev": "rm -r dist/ && npm run prestart && nodemon .",
+    "dev": "rm -r dist/ && npm run prestart && cp .env dist/server && nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
