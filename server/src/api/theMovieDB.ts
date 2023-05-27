@@ -1,8 +1,9 @@
 import Auth from '../auth/Auth';
-import { appendToEndpoint } from '../util/requests';
+import { appendToEndpoint } from '../util/RequestUtil';
 import { SearchTypes } from '../types/Search';
 import { formatRawDataIntoShowModel } from '../TMDBOperations';
 import { Show } from '../../../common/types/Show';
+import { saveTVPosterToServer } from '../util/ImageUtil';
 
 const constructEndpointForGeneralRequest = ({
   // TMDB supports 2 modes:
@@ -73,7 +74,7 @@ const constructEndpointForGeneralRequest = ({
 
 // id - Taken from TMDB
 // requestType ∈ ['reviews', 'recommendations', 'similar']
-export async function getTVShowDetailsByIdGeneral(id: number, requestType: string) {
+export async function getTVShowDetailsByIdGeneral(id: number, requestType: string): Promise<Show> | null {
   let endpoint = constructEndpointForGeneralRequest({
     id, 
     searchType: SearchTypes.ID
@@ -86,11 +87,13 @@ export async function getTVShowDetailsByIdGeneral(id: number, requestType: strin
   // Default back to the shows object if there's no
   // results field name.
   let showToFormat = shows?.results || shows;
+  //console.log(showToFormat);
   if (showToFormat?.id && showToFormat?.name) {
     showToFormat = formatRawDataIntoShowModel(showToFormat);
+    return showToFormat;
   }
 
-  return showToFormat;
+  return null;
 }
 
 export async function getTVShowDetailsByQueryGeneral({
@@ -105,7 +108,7 @@ export async function getTVShowDetailsByQueryGeneral({
   page?: number,
   includeAdult?: boolean,
   firstAirDateYear?: number,
-}): Promise<Show[]> {
+}): Promise<Show> | null {
   const args = {};
 
   args['query'] = query;
@@ -125,24 +128,27 @@ export async function getTVShowDetailsByQueryGeneral({
   let showToFormat = shows?.results || shows;
   if (showToFormat?.id && showToFormat?.name) {
     showToFormat = formatRawDataIntoShowModel(showToFormat);
+    return showToFormat;
   }
 
-  return showToFormat;
+  return null;
 }
 
 // Info taken from: https://developers.themoviedb.org/3/configuration/get-api-configuration
 // imagePath - Obtained from each show object, field name `poster_path`.
 // size - Can be any of the following: 'original', 'w92', 'w154', 'w185', 'w342', 'w500', 'w780'
-export async function getTVShowPosterByImagePath(imagePath: string, size: string) {
+export async function saveTVShowPosterByImagePath(imagePath: string, size: string) {
   const THEMOVIEDB_IMAGE_BASE_URL_INSECURE = 'http://image.tmdb.org/t/p/';
   const THEMOVIEDB_IMAGE_BASE_URL_SECURE = 'https://image.tmdb.org/t/p/';
 
   // imagePath will always contain the `/` character when pulling directly from the API.
   const endpoint = `${THEMOVIEDB_IMAGE_BASE_URL_SECURE}${size}${imagePath}`;
+  console.log(endpoint);
 
-  // TODO: UNTESTED
-  // const image = await fetch(endpoint);
-  // return await image.blob();
+  const image = await fetch(endpoint);
+  const imageBlob = await image.blob();
+
+  await saveTVPosterToServer(imageBlob, imagePath);  
 }
 
 // Wrappers for the general function
@@ -166,7 +172,12 @@ export async function getTVShowReviewsByTVID(id: number) {
 export async function getMultipleTVShowsMetadataByTVIDs(ids: number[]) {
   const metaDataObj = {};
   for (const id of ids) {
-    metaDataObj[id] = await getTVShowMetadataByTVID(id);
+    const show = await getTVShowMetadataByTVID(id);
+    if (show?.posterPath) {
+      await saveTVShowPosterByImagePath(show.posterPath, "w500");
+    }
+
+    metaDataObj[id] = show;
   }
 
   return metaDataObj;

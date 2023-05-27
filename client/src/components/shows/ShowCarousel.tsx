@@ -22,9 +22,11 @@ export const ShowCarousel = ({api}: {api: Api}) => {
   }
 
   useEffect(() => {
-    generateRandomShows().then(data => {
-      setRandomShows(data);
-    });
+    if (!randomShows.length) {
+      generateRandomShows().then(data => {
+        setRandomShows(data);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,7 +42,7 @@ export const ShowCarousel = ({api}: {api: Api}) => {
         />
       ))}
     </>
-  )
+  );
 }
 
 export default ShowCarousel;
