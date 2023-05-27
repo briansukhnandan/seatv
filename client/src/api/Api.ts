@@ -1,3 +1,5 @@
+import { Show } from "../../../common/types/Show";
+
 export default class Api {
   /*
     General function for making a request to some endpoint
@@ -50,7 +52,7 @@ export default class Api {
   ////////////////////////////////////
   // TMDB Search by ID RPC requests //
   ////////////////////////////////////
-  async getMultipleTVShowMetadataByTVIDs(ids: number[]) {
+  async getMultipleTVShowMetadataByTVIDs(ids: number[]): Promise<Record<string, Show>> {
     const metaData = await this.makePOSTApiRequest('/api/rpc/tv', {
       ids
     });
