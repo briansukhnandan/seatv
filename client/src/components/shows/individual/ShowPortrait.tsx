@@ -13,6 +13,7 @@ export const ShowPortrait = ({
   const IMG_WIDTH = 150;
 
   const DEFAULT_IMAGE_PATH = "/image/missing_image.jpg";
+  const DEFAULT_IMAGE_SOURCE = data?.imageURL || DEFAULT_IMAGE_PATH;
   const BORDER_STYLING = {
     border: "solid", 
     borderColor: "black",
@@ -26,23 +27,12 @@ export const ShowPortrait = ({
         <div style={{textAlign: "center"}}>
           <div style={{display: "flex", flexDirection: "column"}}>
             {data.name}
-            { data?.imageURL 
-              ? (
-                <img 
-                  alt={data.name} 
-                  src={data.imageURL}
-                  height={IMG_HEIGHT}
-                  width={IMG_WIDTH}
-                />
-              ) : (
-                <img 
-                  alt={data.name} 
-                  src={DEFAULT_IMAGE_PATH}
-                  height={IMG_HEIGHT}
-                  width={IMG_WIDTH}
-                />
-              )
-            }
+            <img 
+              alt={data.name} 
+              src={DEFAULT_IMAGE_SOURCE}
+              height={IMG_HEIGHT}
+              width={IMG_WIDTH}
+            />
           </div>
         </div>
       </div>
