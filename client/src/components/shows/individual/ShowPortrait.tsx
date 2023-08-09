@@ -14,19 +14,25 @@ export const ShowPortrait = ({
 
   const DEFAULT_IMAGE_PATH = "/image/missing_image.jpg";
   const DEFAULT_IMAGE_SOURCE = data?.imageURL || DEFAULT_IMAGE_PATH;
+  const DEFAULT_NAME = !!data?.name && data?.name?.length > 20
+    ? `${data.name?.slice(0, 20)}...`
+    : data.name;
+
   const BORDER_STYLING = {
     border: "solid", 
     borderColor: "black",
     padding: "1rem",
-    borderRadius: "12px"
+    borderRadius: "15px"
   };
 
   return (
-    <div>
+    <div style={{paddingRight: "15px"}}>
       <div style={BORDER_STYLING}>
         <div style={{textAlign: "center"}}>
           <div style={{display: "flex", flexDirection: "column"}}>
-            {data.name}
+            <div style={{paddingBottom: "8px"}}>
+              {DEFAULT_NAME}
+            </div>
             <img 
               alt={data.name} 
               src={DEFAULT_IMAGE_SOURCE}

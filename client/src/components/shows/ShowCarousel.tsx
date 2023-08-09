@@ -3,6 +3,7 @@ import Marquee from "react-fast-marquee";
 import ShowPortrait from './individual/ShowPortrait';
 import { Show } from '../../../../common/types/Show';
 import Api from '../../api/Api';
+import { generateBlobAndURLFromImageData } from '../../util/ShowUtil';
 
 export const ShowCarousel = ({api}: {api: Api}) => {
   const [ randomShows, setRandomShows ] = useState<Partial<Show>[]>([]);
@@ -24,17 +25,13 @@ export const ShowCarousel = ({api}: {api: Api}) => {
   useEffect(() => {
     if (!randomShows.length) {
       generateRandomShows().then(data => {
-        const modifiedData = data.slice();
-        modifiedData.forEach(show => {
-
-          // Not every show retrieved has imageData
-          if (show?.imageData) {
-            show.imageBlob = new Blob([new Uint8Array(show.imageData).buffer])
-            show.imageURL = URL.createObjectURL(show.imageBlob);
-          }
+        const modifiedData: Partial<Show>[] = [];
+        data.forEach(async show => {
+          const newShow = await generateBlobAndURLFromImageData(show);
+          modifiedData.push(newShow);
         });
 
-        setRandomShows(data);
+        setRandomShows(modifiedData);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

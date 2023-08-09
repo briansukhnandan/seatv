@@ -4,7 +4,9 @@ export interface Show {
 
   /**
    * Related to image data that may come along.
-   * `imageData` is generated on the server side.
+   * `imageData` is generated on the server-side,
+   * while `imageBlob` and `imageURL` are generated
+   * on the client-side.
    */
   imageData?: number[],
   imageBlob?: Blob,
