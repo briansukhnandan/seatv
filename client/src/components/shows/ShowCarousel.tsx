@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Marquee from "react-fast-marquee";
 import ShowPortrait from './individual/ShowPortrait';
 import { Show } from '../../../../common/types/Show';
 import Api from '../../api/Api';
@@ -10,7 +11,7 @@ export const ShowCarousel = ({api}: {api: Api}) => {
     // It's unclear how many tv ids TheMovieDB houses. From minimal
     // trial and error, it seems anything past 150k DNE.
     const maxNumberToChooseFrom = 150000;
-    const numShowsToFetch = 10;
+    const numShowsToFetch = 15;
     const ids = [];
 
     for (let i = 0; i < numShowsToFetch; i++) {
@@ -40,7 +41,10 @@ export const ShowCarousel = ({api}: {api: Api}) => {
   }, []);
 
   return (
-    <div style={{display: "flex", flexDirection: "row"}}>
+    <Marquee
+      autoFill={true}
+      pauseOnHover={true}
+    >
       {(randomShows || []).map(show => (
         <ShowPortrait 
           key={show.name} 
@@ -48,7 +52,7 @@ export const ShowCarousel = ({api}: {api: Api}) => {
           data={show} 
         />
       ))}
-    </div>
+    </Marquee>
   );
 }
 
