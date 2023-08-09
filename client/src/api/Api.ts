@@ -52,7 +52,7 @@ export default class Api {
   ////////////////////////////////////
   // TMDB Search by ID RPC requests //
   ////////////////////////////////////
-  async getMultipleTVShowMetadataByTVIDs(ids: number[]): Promise<Record<string, Show>> {
+  async getMultipleTVShowMetadataByTVIDs(ids: number[]): Promise<Record<string, Partial<Show>>> {
     const metaData = await this.makePOSTApiRequest('/api/rpc/tv', {
       ids
     });

@@ -48,7 +48,7 @@ const constructEndpointForGeneralRequest = ({
  
   const THEMOVIEDB_BASE_URL='https://api.themoviedb.org';
   let paramsObj = {
-    'api_key': new Auth().getTMDBCreds().apiKey
+    api_key: new Auth().getTMDBCreds().apiKey
   };
 
   switch (searchType) {
@@ -137,18 +137,17 @@ export async function getTVShowDetailsByQueryGeneral({
 // Info taken from: https://developers.themoviedb.org/3/configuration/get-api-configuration
 // imagePath - Obtained from each show object, field name `poster_path`.
 // size - Can be any of the following: 'original', 'w92', 'w154', 'w185', 'w342', 'w500', 'w780'
-export async function saveTVShowPosterByImagePath(imagePath: string, size: string) {
+export async function getImageBlobFromTVShowPosterPath(imagePath: string, size: string): Promise<Blob> {
   const THEMOVIEDB_IMAGE_BASE_URL_INSECURE = 'http://image.tmdb.org/t/p/';
   const THEMOVIEDB_IMAGE_BASE_URL_SECURE = 'https://image.tmdb.org/t/p/';
 
   // imagePath will always contain the `/` character when pulling directly from the API.
   const endpoint = `${THEMOVIEDB_IMAGE_BASE_URL_SECURE}${size}${imagePath}`;
-  console.log(endpoint);
 
   const image = await fetch(endpoint);
   const imageBlob = await image.blob();
 
-  await saveTVPosterToServer(imageBlob, imagePath);  
+  return imageBlob; 
 }
 
 // Wrappers for the general function
@@ -173,11 +172,16 @@ export async function getMultipleTVShowsMetadataByTVIDs(ids: number[]) {
   const metaDataObj = {};
   for (const id of ids) {
     const show = await getTVShowMetadataByTVID(id);
-    if (show?.posterPath) {
-      await saveTVShowPosterByImagePath(show.posterPath, "w500");
-    }
-
     metaDataObj[id] = show;
+
+    if (show?.posterPath) {
+      const imageBlob = await getImageBlobFromTVShowPosterPath(show.posterPath, "w500")
+      const imageData = [...new Uint8Array(await imageBlob.arrayBuffer())];
+      metaDataObj[id] = {
+        ...metaDataObj[id],
+        imageData
+      };
+    }
   }
 
   return metaDataObj;
