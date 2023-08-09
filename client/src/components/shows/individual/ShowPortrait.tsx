@@ -13,29 +13,37 @@ export const ShowPortrait = ({
   const IMG_WIDTH = 150;
 
   const DEFAULT_IMAGE_PATH = "/image/missing_image.jpg";
+  const BORDER_STYLING = {
+    border: "solid", 
+    borderColor: "black",
+    padding: "1rem",
+    borderRadius: "12px"
+  };
 
   return (
     <div>
-      <div style={{border: "solid"}}>
-        <div style={{display: "flex", flexDirection: "column"}}>
-          {data.name}
-          { data?.imageURL 
-            ? (
-              <img 
-                alt={data.name} 
-                src={data.imageURL}
-                height={IMG_HEIGHT}
-                width={IMG_WIDTH}
-              />
-            ) : (
-              <img 
-                alt={data.name} 
-                src={DEFAULT_IMAGE_PATH}
-                height={IMG_HEIGHT}
-                width={IMG_WIDTH}
-              />
-            )
-          }
+      <div style={BORDER_STYLING}>
+        <div style={{textAlign: "center"}}>
+          <div style={{display: "flex", flexDirection: "column"}}>
+            {data.name}
+            { data?.imageURL 
+              ? (
+                <img 
+                  alt={data.name} 
+                  src={data.imageURL}
+                  height={IMG_HEIGHT}
+                  width={IMG_WIDTH}
+                />
+              ) : (
+                <img 
+                  alt={data.name} 
+                  src={DEFAULT_IMAGE_PATH}
+                  height={IMG_HEIGHT}
+                  width={IMG_WIDTH}
+                />
+              )
+            }
+          </div>
         </div>
       </div>
     </div>
