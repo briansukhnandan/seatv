@@ -6,10 +6,9 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
   const IMG_HEIGHT = 200;
   const IMG_WIDTH = 150;
 
-  const DEFAULT_IMAGE_PATH = "/image/missing_image.jpg";
-  const DEFAULT_IMAGE_SOURCE = data?.imageURL || DEFAULT_IMAGE_PATH;
-  const DEFAULT_NAME = !!data?.name && data?.name?.length > 20
-    ? `${data.name?.slice(0, 20)}...`
+  const DEFAULT_NAME_LENGTH = 15;
+  const DEFAULT_NAME = !!data?.name && data?.name?.length > DEFAULT_NAME_LENGTH
+    ? `${data.name?.slice(0, DEFAULT_NAME_LENGTH)}...`
     : data.name;
 
   const BORDER_STYLING = {
@@ -30,7 +29,7 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
             <Link to={`/shows/${data.id}`}>
               <img 
                 alt={data.name} 
-                src={DEFAULT_IMAGE_SOURCE}
+                src={data.imageURL}
                 style={{
                   height: IMG_HEIGHT,
                   width: IMG_WIDTH

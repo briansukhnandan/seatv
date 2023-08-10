@@ -1,5 +1,6 @@
 import { Box, Center } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Logo = ({style}: { style?: React.CSSProperties }) => {
   const IMG_HEIGHT = 200;
@@ -14,12 +15,14 @@ const Logo = ({style}: { style?: React.CSSProperties }) => {
 
   return (
     <Box style={DEFAULT_STYLE}>
-      <img 
-        alt="logo"
-        src={DEFAULT_IMAGE_SOURCE}
-        height={IMG_HEIGHT}
-        width={IMG_WIDTH}
-      />
+      <Link to={`/`}>
+        <img 
+          alt="logo"
+          src={DEFAULT_IMAGE_SOURCE}
+          height={IMG_HEIGHT}
+          width={IMG_WIDTH}
+        />
+      </Link>
     </Box>
   );
 }

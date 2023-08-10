@@ -5,11 +5,7 @@ import Router from './Router';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <div className="App">
-        <header className="App-header">
-        </header>
-        <Router />
-      </div>
+      <Router />
     </ChakraProvider>
   );
 }

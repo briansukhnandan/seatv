@@ -9,14 +9,17 @@ import { Show } from "../../../common/types/Show";
  * any img tag or whatever.
  * 
  * @param show Show to generate Blob and URL for.
+ * @returns A new show with all prev fields + new ones attached
  */
 export async function generateBlobAndURLFromImageData(show: Partial<Show>): Promise<Partial<Show>> {
   const newShow = {...show};
   
   // Not every show retrieved has imageData
   if (show?.imageData) {
-    newShow.imageBlob = new Blob([new Uint8Array(show.imageData).buffer])
+    newShow.imageBlob = new Blob([new Uint8Array(show.imageData).buffer]);
     newShow.imageURL = URL.createObjectURL(newShow.imageBlob);
+  } else {
+    newShow.imageURL = "/image/missing_image.jpg";
   }
 
   return newShow;

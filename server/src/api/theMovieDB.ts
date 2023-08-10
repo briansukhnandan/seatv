@@ -89,6 +89,22 @@ export async function getTVShowDetailsByIdGeneral(id: number, requestType: strin
   let showToFormat = shows?.results || shows;
   if (showToFormat?.id && showToFormat?.name) {
     showToFormat = formatRawDataIntoShowModel(showToFormat);
+
+    if (showToFormat?.posterPath) {
+      const imageBlob = await getImageBlobFromTVShowPosterPath(showToFormat.posterPath, "w500")
+      const imageData = [...new Uint8Array(await imageBlob.arrayBuffer())];
+      
+      /**
+       * Opting to only send over JSON data when fetching
+       * metadata to not be entangled in a bunch of different
+       * data types.
+       */
+      showToFormat = {
+        ...showToFormat,
+        imageData
+      };
+    }
+
     return showToFormat;
   }
 
@@ -169,24 +185,10 @@ export async function getTVShowReviewsByTVID(id: number) {
 // RPC wrappers
 export async function getMultipleTVShowsMetadataByTVIDs(ids: number[]) {
   const metaDataObj = {};
+  
   for (const id of ids) {
     const show = await getTVShowMetadataByTVID(id);
     metaDataObj[id] = show;
-
-    if (show?.posterPath) {
-      const imageBlob = await getImageBlobFromTVShowPosterPath(show.posterPath, "w500")
-      const imageData = [...new Uint8Array(await imageBlob.arrayBuffer())];
-      
-      /**
-       * Opting to only send over JSON data when fetching
-       * metadata to not be entangled in a bunch of different
-       * data types.
-       */
-      metaDataObj[id] = {
-        ...metaDataObj[id],
-        imageData
-      };
-    }
   }
 
   return metaDataObj;
