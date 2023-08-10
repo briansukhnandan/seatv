@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Box, Center } from "@chakra-ui/react";
-import { Show } from "../../../../../common/types/Show";
-import useApi from "../../../hooks/useApi";
+import useApi from "hooks/useApi";
 import { useParams } from "react-router-dom";
-import LoadingSpinner from "../../misc/LoadingSpinner";
-import GeneralPageTemplate from "../../misc/GeneralPageTemplate";
-import { generateBlobAndURLFromImageData } from "../../../util/ShowUtil";
-import { SimpleGrid, VStack } from '@chakra-ui/react'
+import LoadingSpinner from "components/misc/LoadingSpinner";
+import GeneralPageTemplate from "components/misc/GeneralPageTemplate";
+import { generateBlobAndURLFromImageData } from "util/ShowUtil";
+import { SimpleGrid, VStack } from '@chakra-ui/react';
+
+import { Show } from "../../../../../common/types/Show";
 
 const ShowOverview = () => {
   const { id } = useParams();

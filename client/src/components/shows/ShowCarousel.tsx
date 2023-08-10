@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Marquee from "react-fast-marquee";
 import ShowPortrait from './individual/ShowPortrait';
 import { Show } from '../../../../common/types/Show';
-import { generateBlobAndURLFromImageData, generateNRandomShowIds } from '../../util/ShowUtil';
-import useApi from '../../hooks/useApi';
-import Api from '../../api/Api';
-import LoadingSpinner from '../misc/LoadingSpinner';
+import { generateBlobAndURLFromImageData, generateNRandomShowIds } from 'util/ShowUtil';
+import useApi from 'hooks/useApi';
+import Api from 'api/Api';
+import LoadingSpinner from 'components/misc/LoadingSpinner';
 
 export const ShowCarousel = () => {
   const [ randomShows, setRandomShows ] = useState<Partial<Show>[]>([]);
