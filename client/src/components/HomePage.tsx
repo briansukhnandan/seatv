@@ -2,12 +2,12 @@ import React from 'react';
 
 import { CenteredLogo } from './misc/Logo';
 import ShowCarousel from './shows/ShowCarousel';
+import GeneralPageTemplate from './misc/GeneralPageTemplate';
 
-export default function HomePage() {
-  return (
-    <>
-      <CenteredLogo />
-      <ShowCarousel />
-    </>
-  );
-}
+const HomePage = () => (
+  <GeneralPageTemplate>
+    <ShowCarousel />
+  </GeneralPageTemplate>
+);
+
+export default HomePage;

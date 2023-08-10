@@ -10,7 +10,7 @@ const GeneralPageTemplate = ({children}: {children: React.ReactNode}) => {
         spacing={6}
       >
         <Logo />
-        <Box>{ children }</Box>
+        <>{ children }</>
       </VStack>
     </Box>
   );

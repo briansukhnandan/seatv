@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Center } from "@chakra-ui/react";
+import { AbsoluteCenter, Box, Center } from "@chakra-ui/react";
 import useApi from "hooks/useApi";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "components/misc/LoadingSpinner";
@@ -42,15 +42,17 @@ const ShowOverview = () => {
             />
           </Center>
           <Box>
-            <VStack>
-              <Box>{show?.name}</Box>
-              <Box>Rating: {show?.rating?.toFixed(2)}</Box>
-              <Box>Genres: { 
-                (show?.genres || [])
-                  .map(genre => genre.name)
-                  .join(" | ") 
-              }</Box>
-            </VStack>
+            <AbsoluteCenter>
+              <VStack>
+                <Box>{show?.name}</Box>
+                <Box>Rating: {show?.rating?.toFixed(2)}</Box>
+                <Box>Genres: { 
+                  (show?.genres || [])
+                    .map(genre => genre.name)
+                    .join(" | ") 
+                }</Box>
+              </VStack>
+            </AbsoluteCenter>
           </Box>
           <Box>
             <VStack>
