@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import HomePage from './components/HomePage';
 import theme from './theme';
+import Router from './Router';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <div className="App">
         <header className="App-header">
         </header>
-        <HomePage />
+        <Router />
       </div>
     </ChakraProvider>
   );

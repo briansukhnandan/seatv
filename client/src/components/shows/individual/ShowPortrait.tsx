@@ -1,5 +1,6 @@
 import React from 'react';
 import { Show } from '../../../../../common/types/Show';
+import { Link } from 'react-router-dom';
 
 export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
   const IMG_HEIGHT = 200;
@@ -26,7 +27,7 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
             <div style={{paddingBottom: "8px"}}>
               {DEFAULT_NAME}
             </div>
-            <a href="/">
+            <Link to={`/shows/${data.id}`}>
               <img 
                 alt={data.name} 
                 src={DEFAULT_IMAGE_SOURCE}
@@ -35,7 +36,7 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
                   width: IMG_WIDTH
                 }}
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

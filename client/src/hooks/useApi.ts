@@ -18,7 +18,8 @@ export default function useApi(apiCallback?: (api: Api) => any | Promise<any>) {
       apiCallback(api).then((data: any) => {
         setData(data);
       });
-    }  
+    }
+    // eslint-disable-next-line
   }, []);
 
   return { api, data };
