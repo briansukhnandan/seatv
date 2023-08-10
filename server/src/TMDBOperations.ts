@@ -2,6 +2,7 @@ import { Show } from '../../common/types/Show';
 
 export function formatRawDataIntoShowModel(rawShow: any): Show {
   return {
+    id: rawShow.id,
     name: rawShow.name,
     posterPath: rawShow.poster_path,
     synopsis: rawShow.overview,

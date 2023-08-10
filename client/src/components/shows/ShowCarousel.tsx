@@ -14,7 +14,7 @@ export const ShowCarousel = () => {
   const generateRandomShows = async(api: Api) => {
     const ids = generateNRandomShowIds(15);
     const showMetadata: Record<string, Partial<Show>> = await api.getMultipleTVShowMetadataByTVIDs(ids);
-    const shows = Object.values(showMetadata).filter(show => !!show?.name);
+    const shows = Object.values(showMetadata).filter(show => !!show?.name && !!show?.id);
 
     const modifiedData: Partial<Show>[] = [];
     shows.forEach(async(show) => {

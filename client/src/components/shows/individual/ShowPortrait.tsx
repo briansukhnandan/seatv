@@ -26,14 +26,16 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
             <div style={{paddingBottom: "8px"}}>
               {DEFAULT_NAME}
             </div>
-            <img 
-              alt={data.name} 
-              src={DEFAULT_IMAGE_SOURCE}
-              style={{
-                height: IMG_HEIGHT,
-                width: IMG_WIDTH
-              }}
-            />
+            <a href="/">
+              <img 
+                alt={data.name} 
+                src={DEFAULT_IMAGE_SOURCE}
+                style={{
+                  height: IMG_HEIGHT,
+                  width: IMG_WIDTH
+                }}
+              />
+            </a>
           </div>
         </div>
       </div>

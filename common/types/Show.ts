@@ -1,4 +1,5 @@
 export interface Show {
+  id: number,
   name: string,
   posterPath: string,
   synopsis: string,
