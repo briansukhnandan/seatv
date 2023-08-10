@@ -44,7 +44,12 @@ const ShowOverview = () => {
           <Box>
             <VStack>
               <Box>{show?.name}</Box>
-              <Box>Rating: {show?.rating}</Box>
+              <Box>Rating: {show?.rating?.toFixed(2)}</Box>
+              <Box>Genres: { 
+                (show?.genres || [])
+                  .map(genre => genre.name)
+                  .join(" | ") 
+              }</Box>
             </VStack>
           </Box>
           <Box>
