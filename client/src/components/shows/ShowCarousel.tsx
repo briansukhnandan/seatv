@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Marquee from "react-fast-marquee";
 import ShowPortrait from './individual/ShowPortrait';
 import { Show } from '../../../../common/types/Show';
-import Api from '../../api/Api';
 import { generateBlobAndURLFromImageData } from '../../util/ShowUtil';
+import useApi from '../../hooks/useApi';
 
-export const ShowCarousel = ({api}: {api: Api}) => {
+export const ShowCarousel = () => {
   const [ randomShows, setRandomShows ] = useState<Partial<Show>[]>([]);
-
-  const generateRandomShows = async(): Promise<Partial<Show>[]> => {
+  const { api, data } = useApi(async(api) => {
     // It's unclear how many tv ids TheMovieDB houses. From minimal
     // trial and error, it seems anything past 150k DNE.
     const maxNumberToChooseFrom = 150000;
@@ -19,23 +18,16 @@ export const ShowCarousel = ({api}: {api: Api}) => {
       ids.push(Math.floor(Math.random() * maxNumberToChooseFrom) + 1);
     }
     const showMetadata: Record<string, Partial<Show>> = await api.getMultipleTVShowMetadataByTVIDs(ids);
-    return Object.values(showMetadata).filter(show => !!show?.name);
-  }
+    const shows = Object.values(showMetadata).filter(show => !!show?.name);
 
-  useEffect(() => {
-    if (!randomShows.length) {
-      generateRandomShows().then(data => {
-        const modifiedData: Partial<Show>[] = [];
-        data.forEach(async show => {
-          const newShow = await generateBlobAndURLFromImageData(show);
-          modifiedData.push(newShow);
-        });
+    const modifiedData: Partial<Show>[] = [];
+    shows.forEach(async show => {
+      const newShow = await generateBlobAndURLFromImageData(show);
+      modifiedData.push(newShow);
+    });
 
-        setRandomShows(modifiedData);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setRandomShows(modifiedData);
+  });
 
   return (
     <Marquee
@@ -45,7 +37,6 @@ export const ShowCarousel = ({api}: {api: Api}) => {
       {(randomShows || []).map(show => (
         <ShowPortrait 
           key={show.name} 
-          api={api} 
           data={show} 
         />
       ))}

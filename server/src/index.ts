@@ -71,5 +71,5 @@ app.get('/api/search/tv/:query', async (req, res) => {
 
 // Listen on port 3002.
 app.listen(PORT, () => {
-  console.log(`server running : http://localhost:${PORT}`);
+  console.log(`Server is running: http://localhost:${PORT}`);
 });

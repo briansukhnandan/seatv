@@ -87,7 +87,6 @@ export async function getTVShowDetailsByIdGeneral(id: number, requestType: strin
   // Default back to the shows object if there's no
   // results field name.
   let showToFormat = shows?.results || shows;
-  //console.log(showToFormat);
   if (showToFormat?.id && showToFormat?.name) {
     showToFormat = formatRawDataIntoShowModel(showToFormat);
     return showToFormat;
@@ -177,6 +176,12 @@ export async function getMultipleTVShowsMetadataByTVIDs(ids: number[]) {
     if (show?.posterPath) {
       const imageBlob = await getImageBlobFromTVShowPosterPath(show.posterPath, "w500")
       const imageData = [...new Uint8Array(await imageBlob.arrayBuffer())];
+      
+      /**
+       * Opting to only send over JSON data when fetching
+       * metadata to not be entangled in a bunch of different
+       * data types.
+       */
       metaDataObj[id] = {
         ...metaDataObj[id],
         imageData

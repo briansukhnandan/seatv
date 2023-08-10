@@ -1,14 +1,7 @@
 import React from 'react';
 import { Show } from '../../../../../common/types/Show';
-import Api from '../../../api/Api';
 
-export const ShowPortrait = ({
-  data, 
-  api
-}: {
-  data: Partial<Show>, 
-  api: Api
-}) => {
+export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
   const IMG_HEIGHT = 200;
   const IMG_WIDTH = 150;
 
