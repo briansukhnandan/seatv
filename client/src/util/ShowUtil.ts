@@ -21,3 +21,16 @@ export async function generateBlobAndURLFromImageData(show: Partial<Show>): Prom
 
   return newShow;
 }
+
+/**
+ * @param numToFetch Number of shows to fetch
+ * @param idMax Max ID number to choose from.
+ * @returns Arr of random numbers from 1 to idMax.
+ */
+export function generateNRandomShowIds(numToFetch: number, idMax = 150000) {
+  const ids = [];
+  for (let i = 0; i < numToFetch; i++) {
+    ids.push(Math.floor(Math.random() * idMax) + 1);
+  }
+  return ids;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
-import ShowCarousel from './shows/ShowCarousel';
+
 import Logo from './misc/Logo';
+import ShowCarousel from './shows/ShowCarousel';
 
 export default function HomePage() {
   return (

@@ -1,6 +1,15 @@
 export interface Show {
   name: string,
   posterPath: string,
+  synopsis: string,
+  currentlyInProduction: boolean,
+  firstAirDate: string,
+  lastAirDate: string,
+  rating: number, /* Represented as a float out of 10.0 */
+  episodeRunTime: number[],
+  languages: string[], /* e.g. ['en'] */
+  genres: Genre[],
+  originCountry: string[],
 
   /**
    * Related to image data that may come along.
@@ -11,4 +20,9 @@ export interface Show {
   imageData?: number[],
   imageBlob?: Blob,
   imageURL?: string
+}
+
+export interface Genre {
+  id: number,
+  name: string
 }
