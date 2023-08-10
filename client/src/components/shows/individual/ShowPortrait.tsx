@@ -29,8 +29,10 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
             <img 
               alt={data.name} 
               src={DEFAULT_IMAGE_SOURCE}
-              height={IMG_HEIGHT}
-              width={IMG_WIDTH}
+              style={{
+                height: IMG_HEIGHT,
+                width: IMG_WIDTH
+              }}
             />
           </div>
         </div>
