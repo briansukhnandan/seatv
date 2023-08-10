@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { CenteredLogo } from './misc/Logo';
-import ShowCarousel from './shows/ShowCarousel';
-import GeneralPageTemplate from './misc/GeneralPageTemplate';
+import ShowCarousel from 'components/shows/ShowCarousel';
+import GeneralPageTemplate from 'components/templates/GeneralPageTemplate';
 
 const HomePage = () => (
   <GeneralPageTemplate>

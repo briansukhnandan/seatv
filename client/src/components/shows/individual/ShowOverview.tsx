@@ -3,7 +3,7 @@ import { AbsoluteCenter, Box, Center } from "@chakra-ui/react";
 import useApi from "hooks/useApi";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "components/misc/LoadingSpinner";
-import GeneralPageTemplate from "components/misc/GeneralPageTemplate";
+import GeneralPageTemplate from "components/templates/GeneralPageTemplate";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import { SimpleGrid, VStack } from '@chakra-ui/react';
 
