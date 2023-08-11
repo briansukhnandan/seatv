@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { AbsoluteCenter, Box, Center } from "@chakra-ui/react";
+import { Box, Center, Container, HStack } from "@chakra-ui/react";
 import useApi from "hooks/useApi";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "components/misc/LoadingSpinner";
 import GeneralPageTemplate from "components/templates/GeneralPageTemplate";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
-import { SimpleGrid, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 
 import { Show } from "../../../../../common/types/Show";
 
@@ -33,39 +33,48 @@ const ShowOverview = () => {
   return (
     <GeneralPageTemplate>
       <Box margin={6}>
-        <SimpleGrid columns={3} spacing={4}>
-          <Center>        
-            <img 
-              alt={show?.name} 
-              src={show?.imageURL}
-              style={{ maxHeight: "500px" }}
-            />
-          </Center>
-          <Box>
-            <AbsoluteCenter>
+        <HStack spacing={"24"}>
+          <Container>
+            <Box>
               <VStack>
-                <Box>{show?.name}</Box>
-                <Box>Rating: {show?.rating?.toFixed(1)}</Box>
+                <Box>      
+                  <img 
+                    alt={show?.name} 
+                    src={show?.imageURL}
+                  />
+                </Box>
                 <Box>
-                  { show?.genres?.length
-                    ? `Genres: ${
-                      show.genres
-                        .map(genre => genre.name)
-                        .join(" | ")
-                    }`
-                    : null
-                  }
+                  <VStack>
+                    <Box 
+                      fontSize={"4xl"} 
+                      fontWeight={"bold"}
+                    >
+                      {show?.name}
+                    </Box>
+                    <Box fontSize={"3xl"}>Rating: {show?.rating?.toFixed(1)}</Box>
+                  </VStack>
                 </Box>
               </VStack>
-            </AbsoluteCenter>
-          </Box>
-          <Box>
-            <VStack>
-              <Box>Synopsis:</Box>
-              <Box>{show?.synopsis || "No synopsis available!"}</Box>
-            </VStack>
-          </Box>
-        </SimpleGrid>
+            </Box>
+          </Container>
+          <Container>
+            <Box>
+              <VStack>
+                <Box fontSize={"3xl"}>Synopsis:</Box>
+                <Box>{show?.synopsis || "No synopsis available!"}</Box>
+                <Box fontSize={"2xl"}>Genres:</Box>
+                  <Box>
+                    { show?.genres?.length
+                      ? (
+                        show.genres.map(genre => <Center>{genre.name}</Center>)
+                      )
+                      : null
+                    }
+                  </Box>
+              </VStack>
+            </Box>
+          </Container>
+        </HStack>
       </Box>
     </GeneralPageTemplate>
   );

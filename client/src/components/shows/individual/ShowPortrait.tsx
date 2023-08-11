@@ -11,21 +11,22 @@ export const ShowPortrait = ({data}: {data: Partial<Show>}) => {
     ? `${data.name?.slice(0, DEFAULT_NAME_LENGTH)}...`
     : data.name;
 
-  const BORDER_STYLING = {
+  const BORDER_STYLING: React.CSSProperties = {
     border: "solid", 
     borderColor: "black",
-    padding: "1rem",
-    borderRadius: "15px"
+    padding: "0.1rem",
+    borderWidth: "1px",
+    boxShadow: "5px 5px 10px black"
   };
 
   return (
     <div style={{paddingRight: "15px"}}>
-      <div style={BORDER_STYLING}>
-        <div style={{textAlign: "center"}}>
-          <div style={{display: "flex", flexDirection: "column"}}>
-            <div style={{paddingBottom: "8px"}}>
-              {DEFAULT_NAME}
-            </div>
+      <div style={{textAlign: "center"}}>
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <div style={{paddingBottom: "8px"}}>
+            {DEFAULT_NAME}
+          </div>
+          <div style={BORDER_STYLING}>
             <Link to={`/shows/${data.id}`}>
               <img 
                 alt={data.name} 
