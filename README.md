@@ -1,4 +1,4 @@
-# tvboxd
+# tvsea
 Letterboxd but for TV shows
 
 Setup for devs:
