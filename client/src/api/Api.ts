@@ -6,14 +6,14 @@ export default class Api {
     endpoint - URL on the backend to make request.
     data (optional) - For passing in data on POST request
   */
-  async makeGETApiRequest(endpoint: string) {
+  private async makeGETApiRequest(endpoint: string) {
     return await fetch(endpoint, {
       method: 'GET',
       mode: 'cors'
     });
   }
 
-  async makePOSTApiRequest(endpoint: string, data: any) {
+  private async makePOSTApiRequest(endpoint: string, data: any) {
     const res = await fetch(endpoint, {
       method: 'POST',
       mode: 'cors',
