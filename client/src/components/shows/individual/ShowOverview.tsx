@@ -8,22 +8,18 @@ import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import { VStack } from '@chakra-ui/react';
 
 import { Show } from "../../../../../common/types/Show";
+import GenreDisplay from "./GenreDisplay";
+import SynopsisDisplay from "./SynopsisDisplay";
+import useGetShow from "hooks/useGetShow";
 
 const ShowOverview = () => {
   const { id } = useParams();
-  const [show, setShow] = useState<Partial<Show>>();
+  const [show, setShow] = useState<Partial<Show>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useApi(async(api) => {
-    if (id && !isNaN(parseInt(id))) {
-      const idNumber = parseInt(id);
-
-      let showMetadata = await api.getTVShowMetadataByTVID(idNumber);
-      showMetadata = await generateBlobAndURLFromImageData(showMetadata);
-      
-      setShow(showMetadata);
-      setIsLoading(false);
-    }
+  useGetShow(id, (show) => {
+    setShow(show);
+    setIsLoading(false);
   });
 
   if (isLoading) {
@@ -60,17 +56,8 @@ const ShowOverview = () => {
           <Container>
             <Box>
               <VStack>
-                <Box fontSize={"3xl"}>Synopsis:</Box>
-                <Box>{show?.synopsis || "No synopsis available!"}</Box>
-                <Box fontSize={"2xl"}>Genres:</Box>
-                  <Box>
-                    { show?.genres?.length
-                      ? (
-                        show.genres.map(genre => <Center>{genre.name}</Center>)
-                      )
-                      : null
-                    }
-                  </Box>
+                <SynopsisDisplay show={show}/>
+                <GenreDisplay show={show}/>
               </VStack>
             </Box>
           </Container>

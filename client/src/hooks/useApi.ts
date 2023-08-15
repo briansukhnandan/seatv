@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Api from "../api/Api";
+import Api from "api/Api";
 
 /**
  * A general hook to interact with the Api class to avoid calling
@@ -11,7 +11,7 @@ import Api from "../api/Api";
  */
 export default function useApi(apiCallback?: (api: Api) => any | Promise<any>) {
   const api = useMemo(() => new Api(), []);
-  const [ data, setData ] = useState<any>(null);
+  const [ data, setData ] = useState(null);
 
   useEffect(() => {
     if (apiCallback) {

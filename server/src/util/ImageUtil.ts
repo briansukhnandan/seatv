@@ -1,6 +1,10 @@
 import fs from "fs";
 import path, { PlatformPath } from "path";
 
+/**
+ * Really for sanity checking purposes. 
+ * Not intended to be used in production.
+ */
 export async function saveTVPosterToServer(imageBlob: Blob, posterPath: string): Promise<PlatformPath> {
   const postersDir = path.join(__dirname, "/posters");
 

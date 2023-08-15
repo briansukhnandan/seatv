@@ -34,5 +34,5 @@ export const CenteredLogo = ({style}: { style?: React.CSSProperties }) => {
     <Center>
       <Logo style={style} />
     </Center>
-  )
+  );
 }

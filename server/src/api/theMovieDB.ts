@@ -4,6 +4,7 @@ import { SearchTypes } from '../types/Search';
 import { formatRawDataIntoShowModel } from '../TMDBOperations';
 import { Show } from '../../../common/types/Show';
 import { saveTVPosterToServer } from '../util/ImageUtil';
+import { handleShowFormattingFromApiResult } from '../util/ShowUtil';
 
 const constructEndpointForGeneralRequest = ({
   // TMDB supports 2 modes:
@@ -86,29 +87,10 @@ export async function getTVShowDetailsByIdGeneral(id: number, requestType: strin
 
   // Default back to the shows object if there's no
   // results field name.
-  let showToFormat = shows?.results || shows;
-  if (showToFormat?.id && showToFormat?.name) {
-    showToFormat = formatRawDataIntoShowModel(showToFormat);
+  const rawShow = shows?.results || shows;
+  const show = await handleShowFormattingFromApiResult(rawShow);
 
-    if (showToFormat?.posterPath) {
-      const imageBlob = await getImageBlobFromTVShowPosterPath(showToFormat.posterPath, "w500")
-      const imageData = [...new Uint8Array(await imageBlob.arrayBuffer())];
-      
-      /**
-       * Opting to only send over JSON data when fetching
-       * metadata to not be entangled in a bunch of different
-       * data types.
-       */
-      showToFormat = {
-        ...showToFormat,
-        imageData
-      };
-    }
-
-    return showToFormat;
-  }
-
-  return null;
+  return show;
 }
 
 export async function getTVShowDetailsByQueryGeneral({
@@ -123,7 +105,7 @@ export async function getTVShowDetailsByQueryGeneral({
   page?: number,
   includeAdult?: boolean,
   firstAirDateYear?: number,
-}): Promise<Show> | null {
+}): Promise<Show> {
   const args = {};
 
   args['query'] = query;
@@ -140,24 +122,20 @@ export async function getTVShowDetailsByQueryGeneral({
   const res = await fetch(endpoint);
   const shows = await res.json();
 
-  let showToFormat = shows?.results || shows;
-  if (showToFormat?.id && showToFormat?.name) {
-    showToFormat = formatRawDataIntoShowModel(showToFormat);
-    return showToFormat;
-  }
+  const rawShow = shows?.results || shows;
+  const show = await handleShowFormattingFromApiResult(rawShow);
 
-  return null;
+  return show;
 }
 
 // Info taken from: https://developers.themoviedb.org/3/configuration/get-api-configuration
 // imagePath - Obtained from each show object, field name `poster_path`.
 // size - Can be any of the following: 'original', 'w92', 'w154', 'w185', 'w342', 'w500', 'w780'
-export async function getImageBlobFromTVShowPosterPath(imagePath: string, size: string): Promise<Blob> {
-  const THEMOVIEDB_IMAGE_BASE_URL_INSECURE = 'http://image.tmdb.org/t/p/';
-  const THEMOVIEDB_IMAGE_BASE_URL_SECURE = 'https://image.tmdb.org/t/p/';
+export async function getImageBlobFromTVShowPosterPath(imagePath: string, size: string, isSecure = true): Promise<Blob> {
+  const THEMOVIEDB_IMAGE_BASE_URL = `http${isSecure ? "s" : ""}://image.tmdb.org/t/p/`;
 
   // imagePath will always contain the `/` character when pulling directly from the API.
-  const endpoint = `${THEMOVIEDB_IMAGE_BASE_URL_SECURE}${size}${imagePath}`;
+  const endpoint = `${THEMOVIEDB_IMAGE_BASE_URL}${size}${imagePath}`;
 
   const image = await fetch(endpoint);
   const imageBlob = await image.blob();

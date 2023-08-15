@@ -11,6 +11,7 @@ export interface Show {
   languages: string[], /* e.g. ['en'] */
   genres: Genre[],
   originCountry: string[],
+  seasons: Season[],
 
   /**
    * Related to image data that may come along.
@@ -26,4 +27,13 @@ export interface Show {
 export interface Genre {
   id: number,
   name: string
+}
+
+export interface Season {
+  id: number,
+  name: string,
+  posterPath: string,
+  airDate: string,
+  episodeCount: number,
+  seasonNumber: number
 }
