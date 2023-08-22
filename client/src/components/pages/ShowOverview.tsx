@@ -7,9 +7,9 @@ import GeneralPageTemplate from "components/templates/GeneralPageTemplate";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import { VStack } from '@chakra-ui/react';
 
-import { Show } from "../../../../../common/types/Show";
-import GenreDisplay from "./GenreDisplay";
-import SynopsisDisplay from "./SynopsisDisplay";
+import { Show } from "../../../../common/types/Show";
+import GenreDisplay from "../shows/individual/GenreDisplay";
+import SynopsisDisplay from "../shows/individual/SynopsisDisplay";
 import useGetShow from "hooks/useGetShow";
 
 const ShowOverview = () => {
