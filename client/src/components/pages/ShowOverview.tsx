@@ -11,13 +11,16 @@ import { Show } from "../../../../common/types/Show";
 import GenreDisplay from "../shows/individual/GenreDisplay";
 import SynopsisDisplay from "../shows/individual/SynopsisDisplay";
 import useGetShow from "hooks/useGetShow";
+import { validateIdInUrl } from "util/ResponseUtil";
 
 const ShowOverview = () => {
   const { id } = useParams();
   const [show, setShow] = useState<Partial<Show>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useGetShow(id, (show) => {
+  const validatedId = validateIdInUrl(id as string);
+
+  useGetShow(validatedId, (show) => {
     setShow(show);
     setIsLoading(false);
   });
@@ -47,7 +50,9 @@ const ShowOverview = () => {
                     >
                       {show?.name}
                     </Box>
-                    <Box fontSize={"3xl"}>Rating: {show?.rating?.toFixed(1)}</Box>
+                    <Box fontSize={"3xl"}>
+                      Rating: {show?.rating?.toFixed(1)}
+                    </Box>
                   </VStack>
                 </Box>
               </VStack>

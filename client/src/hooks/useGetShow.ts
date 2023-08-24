@@ -4,15 +4,13 @@ import { Show } from "../../../common/types/Show";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import useApi from "./useApi";
 
-export default function useGetShow(id?: string, callback?: (show: Show) => any) {
+export default function useGetShow(id?: number, callback?: (show: Show) => any) {
   const [ show, setShow ] = useState<Show>();
   const [ isLoading, setIsLoading ] = useState(true);
 
   useApi(async(api) => {
-    if (id && !isNaN(parseInt(id))) {
-      const idNumber = parseInt(id);
-
-      let showMetadata = await api.getTVShowMetadataByTVID(idNumber);
+    if (id && !isNaN(id)) {
+      let showMetadata = await api.getTVShowMetadataByTVID(id);
       showMetadata = await generateBlobAndURLFromImageData(showMetadata);
       
       setShow(showMetadata);
