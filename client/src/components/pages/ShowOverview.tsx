@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Box, Center, Container, HStack } from "@chakra-ui/react";
-import useApi from "hooks/useApi";
+import { Box, Container, HStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "components/misc/LoadingSpinner";
 import GeneralPageTemplate from "components/templates/GeneralPageTemplate";
-import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import { VStack } from '@chakra-ui/react';
 
 import { Show } from "../../../../common/types/Show";
