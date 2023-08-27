@@ -4,8 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Logo = ({style}: { style?: React.CSSProperties }) => {
-  const IMG_HEIGHT = 160;
-  const IMG_WIDTH = 240;
+  const IMG_HEIGHT = 120;
+  const IMG_WIDTH = 180;
 
   const DEFAULT_IMAGE_SOURCE = "/image/tvboxlogogh.png";
   const DEFAULT_STYLE = style || {
@@ -25,11 +25,6 @@ const Logo = ({style}: { style?: React.CSSProperties }) => {
             width={IMG_WIDTH}
           />
         </Link>
-      </Box>
-      <Box float={"right"} transform="translateY(-50%, -50%)">
-        <Center>
-          <ShowSearchBar />
-        </Center>
       </Box>
     </Box>
   );

@@ -30,8 +30,12 @@ const ShowSearchResults = () => {
             return (
               <Box key={show.id}>
                 <HStack>
-                  <ShowPortrait data={show} />
-                  <SynopsisDisplay show={show} />
+                  <div>
+                    <ShowPortrait data={show} />
+                  </div>
+                  <div style={{maxWidth: "800px", maxHeight: "150px"}}>
+                    <SynopsisDisplay show={show} />
+                  </div>
                 </HStack>
               </Box>
             );

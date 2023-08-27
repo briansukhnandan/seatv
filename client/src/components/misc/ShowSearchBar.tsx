@@ -8,6 +8,7 @@ const ShowSearchBar = () => {
     <InputGroup size='md'>
       <Input 
         placeholder='Search for a TV Show'
+        width='auto'
         onChange={(e) => {
           setQuery(e.target.value);
         }}
