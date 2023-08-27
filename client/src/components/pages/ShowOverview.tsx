@@ -8,7 +8,7 @@ import { VStack } from '@chakra-ui/react';
 import { Show } from "../../../../common/types/Show";
 import GenreDisplay from "../shows/individual/GenreDisplay";
 import SynopsisDisplay from "../shows/individual/SynopsisDisplay";
-import useGetShow from "hooks/useGetShow";
+import useGetShowById from "hooks/useGetShowById";
 import { validateIdInUrl } from "util/ResponseUtil";
 
 const ShowOverview = () => {
@@ -18,7 +18,7 @@ const ShowOverview = () => {
 
   const validatedId = validateIdInUrl(id as string);
 
-  useGetShow(validatedId, (show) => {
+  useGetShowById(validatedId, (show) => {
     setShow(show);
     setIsLoading(false);
   });

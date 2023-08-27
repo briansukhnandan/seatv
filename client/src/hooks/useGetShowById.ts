@@ -4,7 +4,7 @@ import { Show } from "../../../common/types/Show";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import useApi from "./useApi";
 
-export default function useGetShow(id?: number, callback?: (show: Show) => any) {
+export default function useGetShowById(id?: number, callback?: (show: Show) => any) {
   const [ show, setShow ] = useState<Show>();
   const [ isLoading, setIsLoading ] = useState(true);
 

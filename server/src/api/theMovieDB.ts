@@ -105,7 +105,7 @@ export async function getTVShowDetailsByQueryGeneral({
   page?: number,
   includeAdult?: boolean,
   firstAirDateYear?: number,
-}): Promise<Show> {
+}): Promise<Show[]> {
   const args = {};
 
   args['query'] = query;
@@ -122,10 +122,15 @@ export async function getTVShowDetailsByQueryGeneral({
   const res = await fetch(endpoint);
   const shows = await res.json();
 
-  const rawShow = shows?.results || shows;
-  const show = await handleShowFormattingFromApiResult(rawShow);
+  const rawShows = shows?.results || shows;
+  const formattedShows = [];
 
-  return show;
+  for (const show of rawShows) {
+    const formattedShow = await handleShowFormattingFromApiResult(show);
+    formattedShows.push(formattedShow);
+  }
+
+  return formattedShows;
 }
 
 // Info taken from: https://developers.themoviedb.org/3/configuration/get-api-configuration

@@ -13,18 +13,31 @@ const ShowSearchBar = () => {
         }}
       />
       <InputRightElement width='4.5rem'>
-        <Link to={`/shows/search/${encodeURI(query)}`}>
-          <Button 
-            h='1.75rem' 
-            size='sm' 
-            onClick={() => console.log("Button was clicked")}
-          >
-            Search
-          </Button>
-        </Link>
+        {
+          query
+            ? (
+              <Link to={`/shows/search/${encodeURIComponent(query.trim())}`}>
+                <SearchButton />
+              </Link>
+            )
+            : (
+              <SearchButton />
+            )
+        }
       </InputRightElement>
     </InputGroup>
   );
+}
+
+const SearchButton = () => {
+  return (
+    <Button 
+      h='1.75rem' 
+      size='sm' 
+    >
+      Search
+    </Button>
+  )
 }
 
 export default ShowSearchBar;
