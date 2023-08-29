@@ -1,4 +1,4 @@
-# tvsea (WIP)
+# seatv (WIP)
 Letterboxd but for TV shows
 
 Setup for devs:
