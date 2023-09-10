@@ -6,8 +6,8 @@ const SynopsisDisplay = ({show}: {show: Partial<Show>}) => {
   return (
     <>
       <VStack>
-      <Box fontSize={"3xl"}>Synopsis:</Box>
-      <Box>{show?.synopsis || "No synopsis available!"}</Box>
+        <Box fontSize={"3xl"}>Synopsis:</Box>
+        <Box>{show?.synopsis || "No synopsis available!"}</Box>
       </VStack>
     </>
   );

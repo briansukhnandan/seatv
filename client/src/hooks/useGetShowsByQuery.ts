@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
-import Api from "api/Api";
+import { useState } from "react";
 import { Show } from "../../../common/types/Show";
 import { generateBlobAndURLFromImageData } from "util/ShowUtil";
 import useApi from "./useApi";

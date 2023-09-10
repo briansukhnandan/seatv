@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "./Logo";
-import { Box, HStack, Stack, StackDivider, VStack } from "@chakra-ui/react";
+import { Box, HStack, Stack, StackDivider } from "@chakra-ui/react";
 import ShowSearchBar from "components/misc/ShowSearchBar";
 
 const GeneralPageTemplate = ({children}: {children: React.ReactNode}) => {

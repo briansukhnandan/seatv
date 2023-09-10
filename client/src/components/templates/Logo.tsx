@@ -1,5 +1,4 @@
-import { AbsoluteCenter, Box, Center, Flex } from "@chakra-ui/react";
-import ShowSearchBar from "components/misc/ShowSearchBar";
+import { Box, Center } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
